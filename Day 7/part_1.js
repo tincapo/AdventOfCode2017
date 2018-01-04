@@ -1,31 +1,31 @@
 function processInput(inputStr) {
     let inputLines = inputStr.split('\n');
-    let tree = {};
+    let dict = {};
 
     inputLines.forEach(line => {
         let lineSplit = line.split('->');
         let nodeName = lineSplit[0].split(' ')[0].trim();
         let childNodes = lineSplit[1] ? lineSplit[1].split(',').map(v => v.trim()) : [];
         
-        if (tree[nodeName]) {
-            tree[nodeName].children = childNodes;
+        if (dict[nodeName]) {
+            dict[nodeName].children = childNodes;
         }
         else {
-            tree[nodeName] = { 'parent': '', 'children': childNodes };
+            dict[nodeName] = { 'parent': '', 'children': childNodes };
         }
 
         childNodes.forEach(childName => {
-            if (tree[childName]) {
-                tree[childName].parent = nodeName;
+            if (dict[childName]) {
+                dict[childName].parent = nodeName;
             }
             else {
-                tree[childName] = { 'parent': nodeName, 'children': '' }
+                dict[childName] = { 'parent': nodeName, 'children': '' }
             }
         });
     });
 
-    for (let n in tree) {
-        if(!tree[n].parent)
+    for (let n in dict) {
+        if(!dict[n].parent)
             return n;
     }
 }
